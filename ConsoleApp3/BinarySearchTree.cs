@@ -64,6 +64,29 @@ public class BinarySearchTree
             Add(root, arr[i]);
     }
     /// <summary>
+    /// Возращает минимальный элемент дерева
+    /// </summary>
+    /// <returns>Целое число</returns>
+    public int Min()
+    {
+        var node = root;
+        while (node.Left != null)
+            node = node.Left;
+        return node.Data;
+    }
+    /// <summary>
+    /// Возращает Максимальный элемент дерева
+    /// </summary>
+    /// <returns>Целое число</returns>
+    public int Max() 
+    { 
+        var node = root;
+        while (node.Right != null)
+            node = node.Right;
+        return node.Data;
+    }
+
+    /// <summary>
     /// Печатает ДБП инфиксным обходом. Если дерево пустое, выводится &lt;empty tree&gt;
     /// </summary>
     public void Print() => TreeUtils.PrintTreeInfix(root);
