@@ -1,4 +1,5 @@
-﻿using static System.Runtime.InteropServices.JavaScript.JSType;
+﻿using System.Reflection.Emit;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BinaryTrees;
 
@@ -57,7 +58,11 @@ public static class TreeUtils
             return null;
         return new TreeNode<T>(root.Data, Copy(root.Left), Copy(root.Right));
     }
-
+    /// <summary>
+    /// Возвращает сумму значений в листьях
+    /// </summary>
+    /// <param name="root">Ссылка на корень дерева</param>
+    /// <returns>Целое число</returns>
     public static int LeafSum(TreeNode<int>? root)
     {
         if (root == null)
@@ -65,6 +70,32 @@ public static class TreeUtils
         if (root.Left == null && root.Right == null)
             return root.Data;
         return LeafSum(root.Left) + LeafSum(root.Right);
+    }
+    /// <summary>
+    /// Возвращает <i>ширину уровня</i> с заданным номером
+    /// </summary>
+    /// <param name="root">Ссылка на корень дерева</param>
+    /// <param name="level">Номер уровня, для которго нужно найти ширину</param>
+    /// <returns>Целое число</returns>
+    public static int LevelWidth(TreeNode<int>? root, int level)
+    {
+        int res = 0;
+        void Pass(TreeNode<int>? node, int curLevel)
+        {
+            if (node == null)
+            {
+                return;
+            }
+            if (curLevel == level)
+            {
+                res++;
+            }
+            Pass(node.Left, curLevel++);
+            Pass(node.Right, curLevel++);
+            curLevel--;
+        }
+        Pass(root, 0);
+        return res;
     }
 
     #region GetSampleIntTree
