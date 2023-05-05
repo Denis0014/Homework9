@@ -43,7 +43,7 @@ public class BinarySearchTree
     public bool Search(int num)
     {
         var node = root;
-        bool BinarySearch(TreeNode<int> node)
+        bool BinarySearch(TreeNode<int>? node)
         {
             if (node == null)
                 return false;
@@ -63,6 +63,68 @@ public class BinarySearchTree
         for (int i = 1; i < arr.Length; i++)
             Add(root, arr[i]);
     }
+    /// <summary>
+    /// Возращает минимальный элемент дерева
+    /// </summary>
+    /// <returns>Целое число</returns>
+    public int Min()
+    {
+        var node = root;
+        while (node.Left != null)
+            node = node.Left;
+        return node.Data;
+    }
+    /// <summary>
+    /// Возращает Максимальный элемент дерева
+    /// </summary>
+    /// <returns>Целое число</returns>
+    public int Max()
+    {
+        var node = root;
+        while (node.Right != null)
+            node = node.Right;
+        return node.Data;
+    }
+    /// <summary>
+    /// Возращает сумму N минимальных элементов дерева
+    /// </summary>
+    /// <param name="n">Число элементов суммы</param>
+    /// <returns>Целое число</returns>
+    public int GetMinSum(int n)
+    {
+        if (root == null)
+            return 0;
+        int sum = 0;
+        void Pass(TreeNode<int>? node)
+        {
+            if (node == null)
+                return;
+            Pass(node.Left);
+            if (n == 0)
+                return;
+            sum += node.Data;
+            n--;
+            Pass(node.Right);
+        }
+        Pass(root);
+        return sum;
+    }
+
+    public int[] ToSortedArray()
+    {
+        List<int> list = new List<int>();
+        void Pass(TreeNode<int>? node)
+        {
+            if (node == null)
+                return;
+            Pass(node.Left);
+            list.Add(node.Data);
+            Pass(node.Right);
+        }
+        Pass(root);
+        return list.ToArray();
+    }
+
     /// <summary>
     /// Печатает ДБП инфиксным обходом. Если дерево пустое, выводится &lt;empty tree&gt;
     /// </summary>
