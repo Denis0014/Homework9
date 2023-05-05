@@ -12,6 +12,8 @@ namespace Homework9
             Console.WriteLine(tree.Min());
             Console.WriteLine(tree.Max());
             Console.WriteLine(tree.GetMinSum(2));
+            int[] arr = tree.ToSortedArray();
+            Console.WriteLine(string.Join(" ", arr));
         }
     }
 }

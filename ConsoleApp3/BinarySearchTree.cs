@@ -110,6 +110,21 @@ public class BinarySearchTree
         return sum;
     }
 
+    public int[] ToSortedArray()
+    {
+        List<int> list = new List<int>();
+        void Pass(TreeNode<int>? node)
+        {
+            if (node == null)
+                return;
+            Pass(node.Left);
+            list.Add(node.Data);
+            Pass(node.Right);
+        }
+        Pass(root);
+        return list.ToArray();
+    }
+
     /// <summary>
     /// Печатает ДБП инфиксным обходом. Если дерево пустое, выводится &lt;empty tree&gt;
     /// </summary>
