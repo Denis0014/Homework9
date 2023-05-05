@@ -33,11 +33,4 @@ public class TreeNode<T>
         Left = left;
         Right = right;
     }
-
-    public TreeNode<T>? Copy()
-    {
-        if (this == null)
-            return null;
-        return new TreeNode<T>(Data, this.Left?.Copy(), this.Right?.Copy());
-    }
 }

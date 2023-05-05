@@ -1,4 +1,6 @@
-﻿namespace BinaryTrees;
+﻿using static System.Runtime.InteropServices.JavaScript.JSType;
+
+namespace BinaryTrees;
 
 public static class TreeUtils
 {
@@ -45,6 +47,27 @@ public static class TreeUtils
             GetRandomTree(count - leftNodesCount - 1, minVal, maxVal));
     }
 
+    /// <summary>
+    /// Копирует узел и всех его потомков
+    /// </summary>
+    /// <returns>Ссылка на этот узел</returns>
+    public static TreeNode<T>? Copy<T>(TreeNode<T>? root)
+    {
+        if (root == null)
+            return null;
+        return new TreeNode<T>(root.Data, Copy(root.Left), Copy(root.Right));
+    }
+
+    public static int LeafSum(TreeNode<int>? root)
+    {
+        if (root == null)
+            return 0;
+        if (root.Left == null && root.Right == null)
+            return root.Data;
+        return LeafSum(root.Left) + LeafSum(root.Right);
+    }
+
+    #region GetSampleIntTree
     /// <summary>
     /// Создаёт бинарное дерево из 6 целых чисел
     /// </summary>
@@ -150,4 +173,5 @@ public static class TreeUtils
             )
         );
     }
+    #endregion
 }
