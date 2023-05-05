@@ -1,4 +1,5 @@
-﻿using System.Reflection.Emit;
+﻿using System.Numerics;
+using System.Reflection.Emit;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BinaryTrees;
@@ -96,6 +97,32 @@ public static class TreeUtils
         }
         Pass(root, 0);
         return res;
+    }
+    /// <summary>
+    /// Возвращает является ли дерево деревом сумм
+    /// </summary>
+    /// <param name="root">Ссылка на корень дерева</param>
+    /// <returns>Истина или Ложь</returns>
+    public static bool IsSumTree(TreeNode<int>? root)
+    {
+        if (root == null)
+        {
+            return false;
+        }
+        bool flag = true;
+        void Pass(TreeNode<int>? node, int sum)
+        {
+            if (node == null || (node.Left == null && node.Right == null) || !flag)
+            {
+                return;
+            }
+            Pass(node.Left, sum);
+            Pass(node.Right, sum);
+            sum += node.Data;
+            flag = sum == node.Data;
+        }
+        Pass(root, 0);
+        return flag;
     }
 
     #region GetSampleIntTree
@@ -204,5 +231,26 @@ public static class TreeUtils
             )
         );
     }
+    /// <summary>
+    /// Создаёт бинарное дерево сумм
+    /// </summary>
+    ///      26
+    ///    /   \
+    ///   10    3
+    ///  /  \    \
+    /// 4    6    3
+    public static TreeNode<int> GetSampleIntTree6()
+    {
+        return new TreeNode<int>(26,
+            new TreeNode<int>(10,
+                new TreeNode<int>(4),
+                new TreeNode<int>(6)
+            ),
+            new TreeNode<int>(3,
+                right: new TreeNode<int>(3)
+            )
+        );
+    }
+
     #endregion
 }
