@@ -43,7 +43,7 @@ public class BinarySearchTree
     public bool Search(int num)
     {
         var node = root;
-        bool BinarySearch(TreeNode<int> node)
+        bool BinarySearch(TreeNode<int>? node)
         {
             if (node == null)
                 return false;
@@ -78,12 +78,36 @@ public class BinarySearchTree
     /// Возращает Максимальный элемент дерева
     /// </summary>
     /// <returns>Целое число</returns>
-    public int Max() 
-    { 
+    public int Max()
+    {
         var node = root;
         while (node.Right != null)
             node = node.Right;
         return node.Data;
+    }
+    /// <summary>
+    /// Возращает сумму N минимальных элементов дерева
+    /// </summary>
+    /// <param name="n">Число элементов суммы</param>
+    /// <returns>Целое число</returns>
+    public int GetMinSum(int n)
+    {
+        if (root == null)
+            return 0;
+        int sum = 0;
+        void Pass(TreeNode<int>? node)
+        {
+            if (node == null)
+                return;
+            Pass(node.Left);
+            if (n == 0)
+                return;
+            sum += node.Data;
+            n--;
+            Pass(node.Right);
+        }
+        Pass(root);
+        return sum;
     }
 
     /// <summary>
